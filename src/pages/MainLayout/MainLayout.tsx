@@ -25,7 +25,7 @@ function MainLayout({ children }: MainLayoutProps) {
     {
       id: uuidv4(),
       label: "SpO2 Sensor",
-      href: "/spo2",
+      href: "/oxygen-level",
       icon: <SiO2 size={20} />,
     },
   ];

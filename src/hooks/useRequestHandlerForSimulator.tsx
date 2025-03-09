@@ -1,20 +1,33 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import SimulatorType from "../types/SimulatorType";
 
-function useHeartRate() {
+function useRequestHandlerForSimulator() {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const sendHeartRateSample = async (heartRateList: number[]) => {
+  const sendSample = async (values: number[], simulator: SimulatorType) => {
     setLoading(true);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const url = `${backendUrl}/api/heart-rate`;
+    let url: string;
+
+    switch (simulator) {
+      case SimulatorType.HeartRate:
+        url = `${backendUrl}/api/heart-rate`;
+        break;
+      case SimulatorType.OxygenLevel:
+        url = `${backendUrl}/api/oxygen-level`;
+        break;
+      default:
+        toast.error("Geçersiz seçim");
+        return;
+    }
 
     // prettier-ignore
     try {
-      for (const heartRate of heartRateList) {
+      for (const value of values) {
         const body = {
-          rate: heartRate,
+          value: value,
         };
   
         const token = localStorage.getItem("token");
@@ -41,7 +54,7 @@ function useHeartRate() {
     }
   };
 
-  return { sendHeartRateSample, loading };
+  return { sendSample, loading };
 }
 
-export default useHeartRate;
+export default useRequestHandlerForSimulator;

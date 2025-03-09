@@ -1,21 +1,22 @@
 import {
-  Button,
   Card,
+  Button,
+  ScrollArea,
   Grid,
+  NumberInput,
   Group,
   Modal,
   NavLink,
-  NumberInput,
-  ScrollArea,
   Text,
 } from "@mantine/core";
-import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
+import { SiO2 } from "react-icons/si";
+
+import useRequestHandlerForSimulator from "../../hooks/useRequestHandlerForSimulator";
+import SimulatorType from "../../types/SimulatorType";
 import FileModal from "../FileModal/FileModal";
 import { v4 as uuidv4 } from "uuid";
-import { PiHeartbeatLight } from "react-icons/pi";
-import SimulatorType from "../../types/SimulatorType";
-import useRequestHandlerForSimulator from "../../hooks/useRequestHandlerForSimulator";
 
 const options = [
   { id: 1, label: "Test Ölçümü", value: "test" },
@@ -23,15 +24,17 @@ const options = [
   { id: 3, label: "Dosya Aktarımı", value: "file" },
 ];
 
-interface HeartRateValueProps {
+interface OxygenLevelValueProps {
   id: string;
   no: number;
   value: number;
 }
 
-function HeartRate() {
+function OxygenLevel() {
   const [selectedOption, setSelectedOption] = useState("");
-  const [heartRateValues, setHeartRateValues] = useState<HeartRateValueProps[]>(
+  const [oxygenLevelValues, setOxygenLevelValues] = useState<
+    OxygenLevelValueProps[]
+  >(
     Array.from({ length: 20 }, (_, index) => ({
       id: uuidv4(),
       no: index + 1,
@@ -58,22 +61,22 @@ function HeartRate() {
     const numbers: number[] = [];
 
     for (let i = 0; i < 30; i++) {
-      const randomNum = Math.floor(Math.random() * (100 - 40 + 1)) + 40;
+      const randomNum = Math.floor(Math.random() * (100 - 89 + 1)) + 89;
 
       numbers.push(randomNum);
     }
 
-    // notification value
-    const criticLevel = 110;
+    // notification atılacak değer
+    const criticLevel = 88;
 
     numbers.push(criticLevel);
 
-    await sendSample(numbers, SimulatorType.HeartRate);
+    await sendSample(numbers, SimulatorType.OxygenLevel);
   };
 
   const sendRequestWithFile = async () => {
     try {
-      await sendSample(fileValues, SimulatorType.HeartRate);
+      await sendSample(fileValues, SimulatorType.OxygenLevel);
     } catch (error) {
       console.log(error);
     } finally {
@@ -82,9 +85,9 @@ function HeartRate() {
     }
   };
 
-  const updateHeartRateValue = (index: number, newValue: number | string) => {
+  const updateOxygenLevelValue = (index: number, newValue: number | string) => {
     if (typeof newValue === "string") return;
-    setHeartRateValues((prev) =>
+    setOxygenLevelValues((prev) =>
       prev.map((item, i) => (i === index ? { ...item, value: newValue } : item))
     );
   };
@@ -131,7 +134,7 @@ function HeartRate() {
               </Text>
               <ScrollArea.Autosize offsetScrollbars mt={20} mah={200}>
                 <Grid maw={500}>
-                  {heartRateValues.map((x, index) => (
+                  {oxygenLevelValues.map((x, index) => (
                     <NumberInput
                       mx={10}
                       w={100}
@@ -139,7 +142,7 @@ function HeartRate() {
                       label={`Ölçüm ${x.no}`}
                       value={x.value}
                       onChange={(value) =>
-                        updateHeartRateValue(index, value ? value : 0)
+                        updateOxygenLevelValue(index, value ? value : 0)
                       }
                       min={0}
                       max={200}
@@ -156,8 +159,8 @@ function HeartRate() {
               variant="outline"
               onClick={() =>
                 sendSample(
-                  heartRateValues.map((rate) => rate.value),
-                  SimulatorType.HeartRate
+                  oxygenLevelValues.map((rate) => rate.value),
+                  SimulatorType.OxygenLevel
                 )
               }
             >
@@ -219,13 +222,13 @@ function HeartRate() {
             radius="lg"
             style={{ alignItems: "center" }}
           >
-            <PiHeartbeatLight
+            <SiO2
               color="pink"
-              style={{ marginTop: "-20px" }}
-              size={80}
+              style={{ marginTop: "-10px", marginBottom: "5px" }}
+              size={70}
             />
             <Text style={{ textAlign: "center" }} size="26px">
-              Heart Rate Sensor
+              Oxygen Level Sensor
             </Text>
             <Text size="md" style={{ marginTop: 15, textAlign: "center" }}>
               Başlamak için aşağıdaki methodlardan bir tanesini seçiniz.
@@ -272,4 +275,4 @@ function HeartRate() {
   );
 }
 
-export default HeartRate;
+export default OxygenLevel;

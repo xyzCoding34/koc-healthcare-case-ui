@@ -3,8 +3,8 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import MainLayout from "./pages/MainLayout/MainLayout";
 import HeartRate from "./pages/HeartRate/HeartRate";
-import SpO2 from "./pages/SpO2/Spo2";
 import MobileInformation from "./pages/MobileInformation/MobileInformation";
+import OxygenLevel from "./pages/OxygenLevel/OxygenLevel";
 
 function AppRouter() {
   return (
@@ -28,10 +28,10 @@ function AppRouter() {
         }
       />
       <Route
-        path="/spo2"
+        path="/oxygen-level"
         element={
           <MainLayout>
-            <SpO2 />
+            <OxygenLevel />
           </MainLayout>
         }
       />
