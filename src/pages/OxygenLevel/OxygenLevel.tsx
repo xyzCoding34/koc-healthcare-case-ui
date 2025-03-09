@@ -101,7 +101,7 @@ function OxygenLevel() {
       case "test":
         return (
           <Card mt={15} shadow="xs" bg={"gray"} padding="xl" radius="lg">
-            <Text style={{ textAlign: "center" }} size="26px">
+            <Text style={{ textAlign: "center" }} size="26px" mt={-15}>
               Test Ölçümü
             </Text>
             <Text style={{ textAlign: "center" }} mt={10} size="18px">
@@ -115,7 +115,7 @@ function OxygenLevel() {
               variant="outline"
               fullWidth
               mt={20}
-              size="md"
+              size="sm"
               onClick={() => sendRequestForRandomData()}
             >
               Başlat
@@ -126,7 +126,7 @@ function OxygenLevel() {
         return (
           <>
             <Card mt={15} shadow="xs" bg={"gray"} padding="xl" radius="lg">
-              <Text style={{ textAlign: "center" }} size="26px">
+              <Text style={{ textAlign: "center" }} size="26px" mt={-15}>
                 Manuel Ölçüm
               </Text>
               <Text style={{ textAlign: "center" }} mt={10} size="18px">
@@ -153,7 +153,7 @@ function OxygenLevel() {
             </Card>
             <Button
               fullWidth
-              size="md"
+              size="sm"
               mt={15}
               loading={loading}
               variant="outline"
@@ -171,7 +171,7 @@ function OxygenLevel() {
       case "file":
         return (
           <Card mt={15} shadow="xs" bg={"gray"} padding="xl" radius="lg">
-            <Text style={{ textAlign: "center" }} size="26px">
+            <Text style={{ textAlign: "center" }} size="26px" mt={-15}>
               Dosya Aktarımı
             </Text>
             <Text mt={15} style={{ textAlign: "center" }} size="16px">
@@ -186,7 +186,7 @@ function OxygenLevel() {
             <Group grow>
               <Button
                 fullWidth
-                size="md"
+                size="sm"
                 mt={15}
                 variant="outline"
                 onClick={() => open()}
@@ -195,7 +195,7 @@ function OxygenLevel() {
               </Button>
               <Button
                 fullWidth
-                size="md"
+                size="sm"
                 mt={15}
                 disabled={!isFileSelected}
                 loading={loading}
@@ -248,7 +248,7 @@ function OxygenLevel() {
             <Group align="center" style={{ marginTop: 15 }}>
               {options.map((x) => (
                 <Button
-                  size="md"
+                  size="sm"
                   variant="outline"
                   key={x.id}
                   onClick={() => changeSelectedOption(x.value)}

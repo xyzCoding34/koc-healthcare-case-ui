@@ -6,7 +6,7 @@ import { PiHeartbeatLight } from "react-icons/pi";
 import { SiO2 } from "react-icons/si";
 import { useAuthenticationContext } from "../../Context/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
-import { useViewportSize } from "@mantine/hooks";
+import ProfileGroupType from "../../types/ProfileGroupType";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -14,8 +14,10 @@ interface MainLayoutProps {
 
 function MainLayout({ children }: MainLayoutProps) {
   const navigate = useNavigate();
-  const { logout } = useAuthenticationContext();
-  const { width } = useViewportSize();
+  const { logout, user } = useAuthenticationContext();
+
+  // TODO: fix !
+  const profileGroup = user!.profileGroup;
 
   const navbarItems = [
     {
@@ -23,14 +25,27 @@ function MainLayout({ children }: MainLayoutProps) {
       label: "Heart Rate Sensor",
       href: "/heart-rate",
       icon: <PiHeartbeatLight size={30} />,
+      disabled: false,
+      key: "heart-rate",
     },
     {
       id: uuidv4(),
       label: "SpO2 Sensor",
       href: "/oxygen-level",
       icon: <SiO2 size={20} />,
+      disabled: true,
+      key: "oxygen-level",
     },
   ];
+
+  const updatedNavbarItems = navbarItems.map((x) => {
+    if (profileGroup === ProfileGroupType.Nurse && x.key === "oxygen-level") {
+      x.disabled = true;
+    } else {
+      x.disabled = false;
+    }
+    return x;
+  });
 
   const handleNavigate = (href: string) => {
     navigate(href);
@@ -50,30 +65,12 @@ function MainLayout({ children }: MainLayoutProps) {
     >
       <AppShell.Header>
         <Group justify="space-between" h="100%" px="md">
-          <Group>
-            <Image
-              width={40}
-              h={25}
-              src={logo}
-              onClick={() => handleNavigate("/")}
-            />
-            {width > 530 ? (
-              <Text
-                style={{
-                  fontFamily: "initial",
-                  color: "white",
-                  marginLeft: 30,
-                  fontWeight: "lighter",
-                }}
-                onClick={() => handleNavigate("/")}
-                size="30px"
-              >
-                HealthCare Case Study
-              </Text>
-            ) : (
-              <></>
-            )}
-          </Group>
+          <Image
+            width={40}
+            h={25}
+            src={logo}
+            onClick={() => handleNavigate("/")}
+          />
           <Button onClick={logout} variant="outline" color="red">
             Çıkış
           </Button>
@@ -90,8 +87,9 @@ function MainLayout({ children }: MainLayoutProps) {
           Simülatörler
         </Text>
         <Stack align="center" justify="center" m={10}>
-          {navbarItems.map((x) => (
+          {updatedNavbarItems.map((x) => (
             <Button
+              disabled={x.disabled}
               leftSection={x.icon}
               styles={{
                 section: { alignItems: "left" },

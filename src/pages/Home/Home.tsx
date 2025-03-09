@@ -10,6 +10,18 @@ function Home() {
 
   return (
     <Card shadow="xs" padding="xl" radius="lg">
+      <Text
+        style={{
+          fontFamily: "initial",
+          color: "white",
+          fontWeight: "lighter",
+          textAlign: "center",
+        }}
+        size="30px"
+        mb={20}
+      >
+        Koç HealthCare
+      </Text>
       <Text style={{ textAlign: "center" }} size="26px">
         Hoşgeldin {capitalizeFirstLetter(user!.firstName)}
       </Text>

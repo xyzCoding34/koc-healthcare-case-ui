@@ -35,7 +35,7 @@ function Login() {
           }
         );
 
-        const { token, first_name } = response.data;
+        const { token, first_name, profile_group } = response.data;
 
         // console.log(response.data);
 
@@ -45,6 +45,7 @@ function Login() {
           id: uuidv4(),
           firstName: first_name,
           token: token,
+          profileGroup: profile_group,
         });
 
         navigate("/");

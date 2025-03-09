@@ -36,6 +36,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("id", user.id);
     localStorage.setItem("first_name", user.firstName);
+    localStorage.setItem("profile_group", user.profileGroup);
     navigate("/");
   };
 
@@ -46,11 +47,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem("id");
     localStorage.removeItem("first_name");
     localStorage.removeItem("token");
+    localStorage.removeItem("profile_group");
   };
 
   useEffect(() => {
-    const chekcIfItsMobile =
-      window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+    // window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+    const chekcIfItsMobile = window.innerWidth <= 768;
 
     if (chekcIfItsMobile) {
       setIsMobile(true);
@@ -62,10 +64,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     if (currentlyLoggedIn === "true") {
       setIsAuthenticated(true);
+
       const userInfo: User = {
         id: localStorage.getItem("id")!,
         firstName: localStorage.getItem("first_name")!,
         token: localStorage.getItem("token")!,
+        profileGroup: localStorage.getItem("profile_group")!,
       };
       setUser(userInfo);
     }
