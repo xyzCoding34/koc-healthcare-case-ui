@@ -4,11 +4,13 @@ import Home from "./pages/Home/Home";
 import MainLayout from "./pages/MainLayout/MainLayout";
 import HeartRate from "./pages/HeartRate/HeartRate";
 import SpO2 from "./pages/SpO2/Spo2";
+import MobileInformation from "./pages/MobileInformation/MobileInformation";
 
 function AppRouter() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/mobile-information" element={<MobileInformation />} />
       <Route
         path="/"
         element={

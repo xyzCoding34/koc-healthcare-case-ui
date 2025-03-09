@@ -37,7 +37,7 @@ function Login() {
 
         const { token, first_name } = response.data;
 
-        console.log(response.data);
+        // console.log(response.data);
 
         localStorage.setItem("token", token);
 
@@ -47,7 +47,6 @@ function Login() {
           token: token,
         });
 
-        toast.success("Giriş başarılı!");
         navigate("/");
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
@@ -70,13 +69,13 @@ function Login() {
 
   return (
     <Center style={{ height: "100vh", width: "100vw" }}>
-      <Card withBorder radius={20} padding="xl" shadow="xl">
-        <Stack align="center" justify="center" gap="md" m={30}>
+      <Card m={20} withBorder radius={20} padding="xl" shadow="xl">
+        <Stack align="center" justify="center" gap="md" m={15}>
           <Image src={logo} w={200} h={150} />
           <Text style={{ fontSize: "22px", fontWeight: "bold" }}>
             Hoşgeldiniz
           </Text>
-          <Text style={{ fontSize: "16px" }}>
+          <Text style={{ fontSize: "16px", textAlign: "center" }}>
             Lütfen giriş yaparak devam ediniz.
           </Text>
           <TextInput
@@ -95,7 +94,9 @@ function Login() {
             w="100%"
           />
           <Tooltip label="Kullanıcı adı: admin, Parola: admin" position="top">
-            <Text style={{ fontSize: "14px", color: "gray" }}>
+            <Text
+              style={{ fontSize: "14px", color: "gray", textAlign: "center" }}
+            >
               Kullanıcı bilgilerini öğrenmek için fareyi sürükleyiniz.
             </Text>
           </Tooltip>

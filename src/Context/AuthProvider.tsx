@@ -12,6 +12,7 @@ interface AuthContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   isAuthenticated: boolean;
+  isMobile: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   login: (user: User) => void;
   logout: () => void;
@@ -26,10 +27,10 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const login = (user: User) => {
-    console.log("user bu", user);
     setUser(user);
     setIsAuthenticated(true);
     localStorage.setItem("isAuthenticated", "true");
@@ -48,6 +49,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
+    const chekcIfItsMobile =
+      window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+
+    if (chekcIfItsMobile) {
+      setIsMobile(true);
+      navigate("/mobile-information");
+      return;
+    }
+
     const currentlyLoggedIn = localStorage.getItem("isAuthenticated");
 
     if (currentlyLoggedIn === "true") {
@@ -66,6 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       value={{
         user,
         isAuthenticated,
+        isMobile,
         setIsAuthenticated,
         login,
         logout,
