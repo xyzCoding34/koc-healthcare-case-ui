@@ -6,6 +6,7 @@ import { PiHeartbeatLight } from "react-icons/pi";
 import { SiO2 } from "react-icons/si";
 import { useAuthenticationContext } from "../../Context/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
+import { useViewportSize } from "@mantine/hooks";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ interface MainLayoutProps {
 function MainLayout({ children }: MainLayoutProps) {
   const navigate = useNavigate();
   const { logout } = useAuthenticationContext();
+  const { width } = useViewportSize();
 
   const navbarItems = [
     {
@@ -55,18 +57,22 @@ function MainLayout({ children }: MainLayoutProps) {
               src={logo}
               onClick={() => handleNavigate("/")}
             />
-            <Text
-              style={{
-                fontFamily: "initial",
-                color: "white",
-                marginLeft: 30,
-                fontWeight: "lighter",
-              }}
-              onClick={() => handleNavigate("/")}
-              size="30px"
-            >
-              HealthCare Case Study
-            </Text>
+            {width > 530 ? (
+              <Text
+                style={{
+                  fontFamily: "initial",
+                  color: "white",
+                  marginLeft: 30,
+                  fontWeight: "lighter",
+                }}
+                onClick={() => handleNavigate("/")}
+                size="30px"
+              >
+                HealthCare Case Study
+              </Text>
+            ) : (
+              <></>
+            )}
           </Group>
           <Button onClick={logout} variant="outline" color="red">
             Çıkış
