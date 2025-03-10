@@ -64,7 +64,7 @@ function HeartRate() {
     }
 
     // notification value
-    const criticLevel = 41;
+    const criticLevel = 39;
 
     numbers.push(criticLevel);
 
