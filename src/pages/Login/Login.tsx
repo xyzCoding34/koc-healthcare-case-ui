@@ -19,10 +19,10 @@ import toast from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuthenticationContext();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const { login, isAuthenticated } = useAuthenticationContext();
 
   const handleLogin = async () => {
     if (username && password) {
@@ -62,6 +62,12 @@ function Login() {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
@@ -85,6 +91,7 @@ function Login() {
             label="Kullanıcı adı"
             size="md"
             w="100%"
+            onKeyDown={handleKeyDown}
           />
           <PasswordInput
             value={password}
@@ -93,8 +100,20 @@ function Login() {
             type="password"
             size="md"
             w="100%"
+            onKeyDown={handleKeyDown}
           />
-          <Tooltip label="Kullanıcı adı: admin, Parola: admin" position="top">
+          <Tooltip
+            // label="Kullanıcı adı: ayse, Parola: admin || Kullanıcı adı: ahmet, Parola: 123321"
+            label={
+              <>
+                <Text>Kullanıcı adı: ayse, Parola: admin (Admin Yetkisi)</Text>
+                <Text>
+                  Kullanıcı adı: ahmet, Parola: 123321 (Hemşire Yetkisi)
+                </Text>
+              </>
+            }
+            position="top"
+          >
             <Text
               style={{ fontSize: "14px", color: "gray", textAlign: "center" }}
             >

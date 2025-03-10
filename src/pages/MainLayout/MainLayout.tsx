@@ -1,4 +1,12 @@
-import { AppShell, Image, Group, Text, Button, Stack } from "@mantine/core";
+import {
+  AppShell,
+  Image,
+  Group,
+  Text,
+  Button,
+  Stack,
+  Tooltip,
+} from "@mantine/core";
 import { ReactNode } from "react";
 import logo from "../../../public/logo.png";
 import { useNavigate } from "react-router-dom";
@@ -88,20 +96,27 @@ function MainLayout({ children }: MainLayoutProps) {
         </Text>
         <Stack align="center" justify="center" m={10}>
           {updatedNavbarItems.map((x) => (
-            <Button
-              disabled={x.disabled}
-              leftSection={x.icon}
-              styles={{
-                section: { alignItems: "left" },
-              }}
-              variant="outline"
-              fullWidth
+            <Tooltip
               key={x.id}
-              size="md"
-              onClick={() => handleNavigate(x.href)}
+              hidden={!x.disabled}
+              label={"Yetkiniz bulunmamaktadır"}
+              position="bottom"
             >
-              {x.label}
-            </Button>
+              <Button
+                key={x.key}
+                disabled={x.disabled}
+                leftSection={x.icon}
+                styles={{
+                  section: { alignItems: "left" },
+                }}
+                variant="outline"
+                fullWidth
+                size="md"
+                onClick={() => handleNavigate(x.href)}
+              >
+                {x.label}
+              </Button>
+            </Tooltip>
           ))}
         </Stack>
       </AppShell.Navbar>
