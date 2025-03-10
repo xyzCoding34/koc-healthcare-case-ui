@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import User from "../types/User";
 import { useNavigate } from "react-router-dom";
+import { isTokenExpired } from "../helpers/tokenParser";
+import toast from "react-hot-toast";
 
 interface AuthContextType {
   user: User | null;
@@ -41,6 +43,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = () => {
+    navigate("/login");
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated");
@@ -61,6 +64,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     const currentlyLoggedIn = localStorage.getItem("isAuthenticated");
+
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    if (isTokenExpired(token)) {
+      toast.error("Oturum süreniz doldu, lütfen tekrar giriş yapınız.");
+      logout();
+      return;
+    }
 
     if (currentlyLoggedIn === "true") {
       setIsAuthenticated(true);
